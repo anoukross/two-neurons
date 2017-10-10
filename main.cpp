@@ -1,4 +1,5 @@
 #include "Neuron.hpp"
+#include "Network.hpp"
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -7,7 +8,8 @@ using namespace std;
 
 int main(){
 	
-	vector<Neuron> n(2); //Creates 2 neurons
+	Network net;
+
 	
 	double I(0); //I = external current
 	
@@ -27,20 +29,18 @@ int main(){
 	ofstream out("simulator.txt");
 	int steps_number(stopTime/Neuron::h); //Division by h to get a integer  
 	
-	for(unsigned int i(0); i<n.size();++i){
+	for(unsigned int i(0); i<net.getNetworkSize();++i){
 	
 		for(double t(startTime/Neuron::h); t<steps_number; t+=1){
 			if (out.fail()){
 				cerr << "Erreur : impossible d'ouvrir le fichier " << "simulator.dat"
 				<< "en écriture." << endl;
 			} else {
-				out << "A temps: " << t*Neuron::h << " ms, le potentiel de membrane du neurone " << i+1 <<  " est: " << n[i].getPotential() << "." << endl;
-					
-					
-
+					out << "A temps: " << t*Neuron::h << " ms, le potentiel de membrane du neurone " << i+1 <<  " est: " << net.getNetwork()[i]->getPotential() << "." << endl;
+						
 			}
 	
-			n[i].update(I);	
+			net.getNetwork()[i]->update(I, net.getNetwork()[i]->getPotential());	
 			
 		}
 	}

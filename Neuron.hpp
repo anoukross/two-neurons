@@ -23,13 +23,13 @@ class Neuron{
 
 	
 		//atrributs
+		int indice; //Number of the neuron
 		double V; //Membrane potential 
 		unsigned int spikesNumber; //Number of spikes
 		std::vector<double> spikesTime; // The times when the spikes occured
 		double refractory_time;
 		int clock;
-		int indice; //Number of the neuron
-		std::array<int, Dmax> incoming_spikes; //Each step of time is associated with the amplitude of the spikes arriving from the neighbours at that time
+		//std::array<int, Dmax> incoming_spikes; //Each step of time is associated with the amplitude of the spikes arriving from the neighbours at that time
 		
 		
 	public:
@@ -51,8 +51,8 @@ class Neuron{
 		bool isRefractory();
 		
 		//Update
-		void update(double I); //update the neuron state from time t to time t+T, where T is n*h (h pas de temps)	
-										// I external current
+		void update(double I, double potential); //update the neuron state from time t to time t+T, where T is n*h (h pas de temps)	
+												// I external current
 };
 
 #endif

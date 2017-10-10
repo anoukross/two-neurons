@@ -1,6 +1,6 @@
 #include "Neuron.hpp"
 #include <cmath>
-#include "Network.cpp"
+#include "Network.hpp"
 
 //Constructeur et destructeur
 Neuron::Neuron(int i, double potential)
@@ -34,7 +34,7 @@ bool Neuron::isRefractory(){
 
 		
 //Update
-void Neuron::update(double I){
+void Neuron::update(double I, double potential){
 	if(isRefractory()){ //If neuron is refractory -> neuron has spiked -> V is not modified
 		refractory_time-=step;//Decrementation of the refractory time 
 	}else{
@@ -44,13 +44,10 @@ void Neuron::update(double I){
 			spikesTime.push_back(clock); 
 			spikesNumber+=1;
 			refractory_time=tau_ref/h; //Initialisation of the refractory time 
-			V_new=V_reset; //After  a spike, the potential gets back to its reset value
-			for(unsigned int i(0); i<neighbours.size();++i){
-				neighboursconnect(indice, i, V_new);
+			for(unsigned int i(0); i<Network::getNetworkSize();++i){
+				Network::connect(indice, i, V_new, I); //V_new = J 
 			}
-
-			
-				
+			V_new=V_reset; //After  a spike, the potential gets back to its reset value		
 		}
 		V=V_new; //modify neuron potential
 	}

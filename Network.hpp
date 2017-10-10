@@ -3,11 +3,12 @@
 
 #include "Neuron.hpp"
 #include <vector>
+#include <memory>
 
 
 class Network{
 	private:
-		std::vector<unsigned int> my_network; //Index of the neurons
+		std::vector<std::unique_ptr<Neuron>> my_network; 
 		std::vector<std::vector<bool>> neighbours; 
 		std::vector<std::vector<double>> current_weights; 
 	public:
@@ -17,10 +18,11 @@ class Network{
 		~Network();
 		
 	//Getters
-	std::vector<unsigned int> getMyNetwork();
+	std::vector<std::unique_ptr<Neuron>> getNetwork();
+	static unsigned int getNetworkSize();
 		
 	//Connexion
-	void connect(unsigned int from, unsigned int to, double weight);
+	static void connect(unsigned int from, unsigned int to, double weight, double current);
 	
 };
 
