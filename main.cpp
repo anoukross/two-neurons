@@ -29,7 +29,7 @@ int main(){
 	ofstream out("simulator.txt");
 	int steps_number(stopTime/Neuron::h); //Division by h to get a integer  
 	
-	for(unsigned int i(0); i<net.getNetworkSize();++i){
+	for(unsigned int i(0); i<net.getNetwork().size();++i){
 	
 		for(double t(startTime/Neuron::h); t<steps_number; t+=1){
 			if (out.fail()){
@@ -40,7 +40,7 @@ int main(){
 						
 			}
 	
-			net.getNetwork()[i]->update(I, net.getNetwork()[i]->getPotential());	
+			net.getNetwork()[i]->update(I, 0);	//No potential from another neuron
 			
 		}
 	}

@@ -19,10 +19,9 @@ class Network{
 		
 	//Getters
 	std::vector<std::unique_ptr<Neuron>> getNetwork();
-	static unsigned int getNetworkSize();
 		
 	//Connexion
-	static void connect(unsigned int from, unsigned int to, double weight, double current);
+	void connect(unsigned int from, unsigned int to, double J, double current);
 	
 };
 

@@ -1,10 +1,11 @@
 #ifndef NEURON_HPP
 #define NEURON_HPP
+
 #include <vector>
 #include <array>
 #include <cmath>
 
-const int Dmax=10; //Délais maximum de transmission ->>> METTRE VRAIE VALEUR
+//const int Dmax=10; //Délais maximum de transmission ->>> METTRE VRAIE VALEUR
 
 class Neuron{
 	private:
@@ -29,6 +30,8 @@ class Neuron{
 		std::vector<double> spikesTime; // The times when the spikes occured
 		double refractory_time;
 		int clock;
+		
+		
 		//std::array<int, Dmax> incoming_spikes; //Each step of time is associated with the amplitude of the spikes arriving from the neighbours at that time
 		
 		
@@ -51,7 +54,7 @@ class Neuron{
 		bool isRefractory();
 		
 		//Update
-		void update(double I, double potential); //update the neuron state from time t to time t+T, where T is n*h (h pas de temps)	
+		void update(double I, double J); //update the neuron state from time t to time t+T, where T is n*h (h pas de temps)	
 												// I external current
 };
 

@@ -27,16 +27,11 @@ std::vector<std::unique_ptr<Neuron>> Network::getNetwork(){
 	return my_network;
 }
 
-unsigned int Network::getNetworkSize(){
-	return my_network.size();
-}
-
 
 //Connexion
-void Network::connect(unsigned int from, unsigned int to, double weight, double current){
+void Network::connect(unsigned int from, unsigned int to, double J, double current){
 	if(neighbours[from][to]==true){
-		double V_post_synap(weight + my_network[to].getPotential());
-		my_network[to].update(current, V_post_synap);
+		my_network[to]->update(current, J);
 	}
 }
 
