@@ -1,5 +1,5 @@
 #include "Network.hpp"
-#include <memory>
+
 
 //Constructeur et destructeur
 
@@ -7,8 +7,15 @@ Network::Network()
 {
 	
 	
-	std::unique_ptr<Neuron> n0(new Neuron(0));
-	std::unique_ptr<Neuron> n1(new Neuron(1));
+	//std::unique_ptr<Neuron> n0(new Neuron(0));
+	//std::unique_ptr<Neuron> n1(new Neuron(1));
+	
+	
+	Neuron* n0(nullptr);
+	n0= new Neuron(0);
+	
+	Neuron* n1(nullptr);
+	n1= new Neuron(1);
 	
 	my_network.push_back(n0);
 	my_network.push_back(n1);
@@ -20,10 +27,16 @@ Network::Network()
 	
 }
 
-Network::~Network(){}
+Network::~Network(){
+	for (unsigned int i(0); i<my_network.size(); ++i){
+		delete my_network[i];
+		my_network[i]=nullptr;
+	}
+	my_network.clear();
+}
 
 //Getters
-std::vector<std::unique_ptr<Neuron>> Network::getNetwork(){
+std::vector<Neuron*> Network::getNetwork(){
 	return my_network;
 }
 
