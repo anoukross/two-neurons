@@ -5,8 +5,6 @@
 
 Network::Network()
 {
-	
-	
 	Neuron* n0(nullptr);
 	n0 = new Neuron;
 	
@@ -29,12 +27,15 @@ Network::Network()
 	current_weights.emplace_back(); 
 	current_weights[1].push_back(0.1);//[1][0] ->receives with amplitude 0.1
 	current_weights[1].push_back(0); ;//[1][1] ->do not tranfer to himself
-	
-	
-	
 }
 
-Network::~Network(){}
+Network::~Network(){
+	for (unsigned int i(0); i<my_network.size(); ++i){
+ 		delete my_network[i];
+		my_network[i]=nullptr;
+ 	}
+	my_network.clear();
+}
 
 //Getters
 std::vector<Neuron*> Network::getNetwork() const{
@@ -46,7 +47,6 @@ std::vector<std::vector<double>> Network::getCurrentWeights() const{
 
 
 //Connexion
-
 void Network::connect(unsigned int from, unsigned int to, double weight){
 	if( (my_network[from]->update(I, 0)) and (targets[from][to])){	
 		my_network[to]->update(I, weight);
