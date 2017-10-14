@@ -24,7 +24,6 @@ class Neuron{
 
 	
 		//atrributs
-		int indice; //Number of the neuron
 		double V; //Membrane potential 
 		unsigned int spikesNumber; //Number of spikes
 		std::vector<double> spikesTime; // The times when the spikes occured
@@ -39,9 +38,10 @@ class Neuron{
 	
 		//Constante de classe publique
 		static constexpr double h=0.1; //pas de temps h = 0.1 ms
+		static constexpr double J=100; //Post synaptic current
 		
 		//Constructeur et destructeur
-		Neuron(int i, double potential=0.0); //Initialisation par défaut à 0.0
+		Neuron(double potential=0.0); //Initialisation par défaut à 0.0
 		~Neuron();
 		
 		//Getters
@@ -50,12 +50,16 @@ class Neuron{
 		unsigned int getSpikesNumber() const;
 		std::vector<double> getSpikesTime() const;
 		
+		//Setters
+		void setPotential(double potential);
+		
 		//bool
 		bool isRefractory();
 		
 		//Update
-		void update(double I, double J); //update the neuron state from time t to time t+T, where T is n*h (h pas de temps)	
-												// I external current
+		bool update(double I, double weight); //update the neuron state from time t to time t+T, where T is n*h (h pas de temps)	
+								// I external current
+								//Returns true if a neuron has spikes
 };
 
 #endif
