@@ -18,7 +18,8 @@ class Network{
 		~Network();
 		
 	//Getters
-	std::vector<Neuron*> getNetwork();
+	std::vector<Neuron*> getNetwork() const;
+	std::vector<std::vector<double>> getCurrentWeights() const;
 		
 	//Connexion
 	void connect(unsigned int from, unsigned int to, double weight);

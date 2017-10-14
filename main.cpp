@@ -36,7 +36,13 @@ int main(){
 				for(unsigned int i(0); i<net.getNetwork().size(); ++i){
 					for(unsigned int j(0); j<net.getNetwork().size(); ++j){
 						if(i!=j){
-							net.connect(i,j, net.getNetwork()[i]->getPostSynaptic());
+							double weight(0);
+							if(net.getCurrentWeights()[i][j]<=net.getCurrentWeights()[j][i]){ //The amplitude of the spike is the smallest between the receiver and the donner amplititude J
+								weight=net.getCurrentWeights()[i][j];
+							}else{
+								weight=net.getCurrentWeights()[j][i];
+							}
+							net.connect(i,j, weight);
 						}
 						
 					}

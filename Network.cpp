@@ -23,6 +23,13 @@ Network::Network()
 	targets[1].push_back(false);//n1 does not transmit his spikes to n0
 	targets[1].push_back(false);
 	
+	current_weights.emplace_back();
+	current_weights[0].push_back(0);//[0][0] ->do not tranfer to himself
+	current_weights[0].push_back(0.1); //[0][1] ->0 to 1 with ampiltude 0.1
+	current_weights.emplace_back(); 
+	current_weights[1].push_back(0.1);//[1][0] ->receives with amplitude 0.1
+	current_weights[1].push_back(0); ;//[1][1] ->do not tranfer to himself
+	
 	
 	
 }
@@ -30,8 +37,11 @@ Network::Network()
 Network::~Network(){}
 
 //Getters
-std::vector<Neuron*> Network::getNetwork(){
+std::vector<Neuron*> Network::getNetwork() const{
 	return my_network;
+}
+std::vector<std::vector<double>> Network::getCurrentWeights() const{
+	return current_weights;
 }
 
 

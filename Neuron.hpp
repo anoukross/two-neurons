@@ -5,8 +5,8 @@
 #include <array>
 #include <cmath>
 
-//const int Dmax=10; //Délais maximum de transmission ->>> METTRE VRAIE VALEUR
 
+const int Dmax=10; //Délais maximum de transmission ->>> METTRE VRAIE VALEUR
 class Neuron{
 	private:
 	
@@ -20,7 +20,7 @@ class Neuron{
 		const double V_th=20; //Valeur du potentiel qui cause un spike (Potential threshold)
 		const int step=1; //remplace le pas de temps h
 		const double e=exp(-(h/tau));
-		const double J=0.1; //Post synaptic current
+
 	
 
 	
@@ -32,7 +32,7 @@ class Neuron{
 		int clock;
 		
 		
-		//std::array<int, Dmax> incoming_spikes; //Each step of time is associated with the amplitude of the spikes arriving from the neighbours at that time
+		std::array<int, Dmax> incoming_spikes; //Each step of time is associated with the amplitude of the spikes arriving from the neighbours at that time
 		
 		
 	public:
@@ -47,7 +47,6 @@ class Neuron{
 		//Getters
 		double getPotential() const;
 		double getResistance() const;
-		double getPostSynaptic() const;
 		unsigned int getSpikesNumber() const;
 		std::vector<double> getSpikesTime() const;
 		
