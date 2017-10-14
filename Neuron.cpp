@@ -17,6 +17,9 @@ double Neuron::getPotential() const{
 double Neuron::getResistance() const{
 	return R;
 }
+double Neuron::getPostSynaptic() const{
+	return J;
+}
 unsigned int Neuron::getSpikesNumber() const{
 	return spikesNumber;
 }

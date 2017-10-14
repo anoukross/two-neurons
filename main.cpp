@@ -36,7 +36,7 @@ int main(){
 				for(unsigned int i(0); i<net.getNetwork().size(); ++i){
 					for(unsigned int j(0); j<net.getNetwork().size(); ++j){
 						if(i!=j){
-							net.connect(i,j, Neuron::J);
+							net.connect(i,j, net.getNetwork()[i]->getPostSynaptic());
 						}
 						
 					}

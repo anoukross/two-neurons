@@ -20,6 +20,7 @@ class Neuron{
 		const double V_th=20; //Valeur du potentiel qui cause un spike (Potential threshold)
 		const int step=1; //remplace le pas de temps h
 		const double e=exp(-(h/tau));
+		const double J=0.1; //Post synaptic current
 	
 
 	
@@ -38,7 +39,6 @@ class Neuron{
 	
 		//Constante de classe publique
 		static constexpr double h=0.1; //pas de temps h = 0.1 ms
-		static constexpr double J=100; //Post synaptic current
 		
 		//Constructeur et destructeur
 		Neuron(double potential=0.0); //Initialisation par défaut à 0.0
@@ -47,6 +47,7 @@ class Neuron{
 		//Getters
 		double getPotential() const;
 		double getResistance() const;
+		double getPostSynaptic() const;
 		unsigned int getSpikesNumber() const;
 		std::vector<double> getSpikesTime() const;
 		
