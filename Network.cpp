@@ -24,13 +24,13 @@ Network::Network()
 	
 	current_weights.emplace_back();
 	current_weights[0].push_back(0);//[0][0] ->do not tranfer to himself
-	current_weights[0].push_back(0.1); //[0][1] ->0 to 1 with ampiltude 0.1
+	current_weights[0].push_back(0.1); //J=0.1mV [0][1] ->0 gives to 1 with ampiltude 0.1
 	current_weights.emplace_back(); 
-	current_weights[1].push_back(0.1);//[1][0] ->receives with amplitude 0.1
+	current_weights[1].push_back(0.1);//[1][0] ->1 receives from a 0 with amplitude 0.1
 	current_weights[1].push_back(0); ;//[1][1] ->do not tranfer to himself
 	delay.emplace_back();
 	delay[0].push_back(0);
-	delay[0].push_back(5); //5 steps of time after the Neuron one has spiked will the Neuron 2 receives it
+	delay[0].push_back(15); //15 steps of time ->1.5ms after the Neuron one has spiked will the Neuron 2 receives it
 	delay.emplace_back();
 	delay[1].push_back(0);
 	delay[1].push_back(0);
