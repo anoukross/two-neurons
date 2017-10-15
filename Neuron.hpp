@@ -21,17 +21,12 @@ class Neuron{
 		const int step=1; //remplace le pas de temps h
 		const double e=exp(-(h/tau));
 
-	
-
-	
 		//atrributs
 		double V; //Membrane potential 
 		unsigned int spikesNumber; //Number of spikes
 		std::vector<double> spikesTime; // The times when the spikes occured
 		double refractory_time;
-		int clock;
-		
-		
+		unsigned int clock;
 		std::array<int, Dmax> incoming_spikes; //Each step of time is associated with the amplitude of the spikes arriving from the neighbours at that time
 		
 		
@@ -52,12 +47,13 @@ class Neuron{
 		
 		//Setters
 		void setPotential(double potential);
+		void setIncomingSpikes(unsigned int delay, double weight);
 		
 		//bool
 		bool isRefractory();
 		
 		//Update
-		bool update(double I, double weight); //update the neuron state from time t to time t+T, where T is n*h (h pas de temps)	
+		bool update(double I); //update the neuron state from time t to time t+T, where T is n*h (h pas de temps)	
 								// I external current
 								//Returns true if a neuron has spikes
 };

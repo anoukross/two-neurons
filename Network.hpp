@@ -8,9 +8,11 @@
 
 class Network{
 	private: 
+	
 		std::vector<Neuron*> my_network; 
 		std::vector<std::vector<bool>> targets; 
 		std::vector<std::vector<double>> current_weights; 
+		std::vector<std::vector<unsigned int>> delay;
 	public:
 	
 	//Constructeur et destructeur

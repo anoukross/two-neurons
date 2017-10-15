@@ -1,5 +1,6 @@
 #include "Network.hpp"
 #include "Constants.hpp"
+#include <iostream>
 
 //Constructeur et destructeur
 
@@ -27,6 +28,14 @@ Network::Network()
 	current_weights.emplace_back(); 
 	current_weights[1].push_back(0.1);//[1][0] ->receives with amplitude 0.1
 	current_weights[1].push_back(0); ;//[1][1] ->do not tranfer to himself
+	delay.emplace_back();
+	delay[0].push_back(0);
+	delay[0].push_back(5); //5 steps of time after the Neuron one has spiked will the Neuron 2 receives it
+	delay.emplace_back();
+	delay[1].push_back(0);
+	delay[1].push_back(0);
+	
+	
 }
 
 Network::~Network(){
@@ -48,8 +57,9 @@ std::vector<std::vector<double>> Network::getCurrentWeights() const{
 
 //Connexion
 void Network::connect(unsigned int from, unsigned int to, double weight){
-	if( (my_network[from]->update(I, 0)) and (targets[from][to])){	
-		my_network[to]->update(I, weight);
+	if((my_network[from]->update(I)) and (targets[from][to])){
+		my_network[to]->setIncomingSpikes((delay[from][to]),weight);
+		my_network[to]->update(I);
 	}
 }
 

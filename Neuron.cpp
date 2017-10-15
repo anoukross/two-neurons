@@ -1,11 +1,16 @@
 #include "Neuron.hpp"
 #include <cmath>
 #include "Network.hpp"
+#include <iostream>
 
 //Constructeur et destructeur
 Neuron::Neuron(double potential)
 :V(potential), spikesNumber(0.0), refractory_time(0), clock(0)
 {
+	for(unsigned int i(0);i<Dmax;++i){
+		incoming_spikes[0]=0;
+	}
+	
 	spikesTime.clear(); //To be sure that when we create a neuron it has got no spikes time 
 }
 Neuron::~Neuron(){}
@@ -25,9 +30,11 @@ std::vector<double> Neuron::getSpikesTime() const{
 }
 
 //Setters
-
 void Neuron::setPotential(double potential){
 	V=potential;
+}
+void Neuron::setIncomingSpikes(unsigned int delay, double weight){
+	incoming_spikes[delay]+=weight;
 }
 
 //bool
@@ -40,12 +47,15 @@ bool Neuron::isRefractory(){
 
 		
 //Update
-bool Neuron::update(double I, double weight){
+bool Neuron::update(double I){
 	bool hasSpiked(false);
 	if(isRefractory()){ //If neuron is refractory -> neuron has spiked -> V is not modified
 		refractory_time-=step;//Decrementation of the refractory time 
 	}else{
-		double V_new(e*V+I*R*(1-e) + weight);
+		double V_new(e*V+I*R*(1-e));
+		if(incoming_spikes[0]!=0){ //If a spike is associated with the current time, we add it to the new potential
+			V_new+=incoming_spikes[0];	
+		}
 			
 		if(V_new > V_th){
 			spikesTime.push_back(clock); 
@@ -59,6 +69,10 @@ bool Neuron::update(double I, double weight){
 	}
 	
 	
-	++clock;	
+	++clock;
+	for(unsigned i(0); i<Dmax; ++i){
+		incoming_spikes[i]=incoming_spikes[i+1];
+	}
+		
 	return hasSpiked;
 }
