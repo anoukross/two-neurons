@@ -6,7 +6,7 @@
 #include <cmath>
 
 
-const int Dmax=10; //Délais maximum de transmission ->>> METTRE VRAIE VALEUR
+const int Dmax=20; //Délais maximum de transmission
 class Neuron{
 	private:
 	
