@@ -5,10 +5,10 @@
 Network::Network()
 {
 	Neuron* n0(nullptr);
-	n0 = new Neuron;
+	n0 = new Neuron(0);
 	
 	Neuron* n1(nullptr);
-	n1 = new Neuron;
+	n1 = new Neuron(1);
 	
 	my_network.push_back(n0);
 	my_network.push_back(n1);
@@ -53,10 +53,11 @@ std::vector<std::vector<double>> Network::getCurrentWeights() const{
 
 
 //Connexion
-void Network::connect(unsigned int from, unsigned int to, double weight, double ext_current){
-	if((my_network[from]->update(ext_current)) and (targets[from][to])){ //Check whether n(from) has spiked and if n(from) gives his spikes to n(to)
-		my_network[to]->setIncomingSpikes((delay[from][to]),weight); //set in the buffer the incoming spikes
-		my_network[to]->update(0); //When the spike is transmitted the external current is equal to 0
+void Network::connect(unsigned int from, unsigned int to, double weight, double ext_current, unsigned int time){
+	if((my_network[from]->update(ext_current, time)) and (targets[from][to])){ // check whether n(from) has spikes and if it gives his spikes to n(to)
+			my_network[to]->setIncomingSpikes((delay[from][to]),weight); //set in the buffer the incoming spikes
+			my_network[to]->update(0, time); //When the spike is transmitted the external current is equal to 0
+			
 	}
 }
 

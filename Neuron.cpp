@@ -4,8 +4,8 @@
 #include <iostream>
 
 //Constructeur et destructeur
-Neuron::Neuron(double potential)
-:V(potential), spikesNumber(0.0), refractory_time(0), clock(0)
+Neuron::Neuron(unsigned int i, double potential)
+:indice(i), V(potential), spikesNumber(0.0), refractory_time(0), clock(0)
 {
 	for(unsigned int i(0);i<Dmax;++i){
 		incoming_spikes[0]=0;
@@ -34,7 +34,7 @@ void Neuron::setPotential(double potential){
 	V=potential;
 }
 void Neuron::setIncomingSpikes(unsigned int delay, double weight){
-	incoming_spikes[delay]+=weight;
+	incoming_spikes[(delay+clock)%Dmax]+=weight; //Ww add the weight of the postsynaptic current in the buffer compartment corresponding to (delay+clock)%Dmax
 }
 
 //bool
@@ -47,14 +47,16 @@ bool Neuron::isRefractory(){
 
 		
 //Update
-bool Neuron::update(double I){
+bool Neuron::update(double I, unsigned int time){
 	bool hasSpiked(false);
 	if(isRefractory()){ //If neuron is refractory -> neuron has spiked -> V is not modified
 		refractory_time-=step;//Decrementation of the refractory time 
 	}else{
 		double V_new(e*V+I*R*(1-e));
-		if(incoming_spikes[0]!=0){ //If a spike is associated with the current time, we add it to the new potential
-			V_new+=incoming_spikes[0];	
+		if(incoming_spikes[clock%Dmax]>0){ //If a spike is associated with the current time, we add it to the new potential
+			V_new+=incoming_spikes[clock%Dmax];
+			std::cout << indice+1 << " has received a spike at time " << time*h << std::endl;	
+			incoming_spikes[clock%Dmax]=0; //Reinitialisation of the value of my buffer corresponding to [clock%Dmax[ that have just been used
 		}
 			
 		if(V_new > V_th){
@@ -63,7 +65,7 @@ bool Neuron::update(double I){
 			refractory_time=tau_ref/h; //Initialisation of the refractory time 
 			V_new=V_reset; //After  a spike, the potential gets back to its reset value	
 			hasSpiked=true;	
-			std::cout << "Spike at time: " << clock*h << " ms" << std::endl;
+			std::cout << "Neuron " << indice+1 << " has spiked at time: " << time*h << std::endl;
 			}
 		
 		V=V_new; //modify neuron potential
@@ -71,9 +73,6 @@ bool Neuron::update(double I){
 	
 	
 	++clock;
-	for(unsigned i(0); i<Dmax; ++i){
-		incoming_spikes[i]=incoming_spikes[i+1];
-	}
 		
 	return hasSpiked;
 }

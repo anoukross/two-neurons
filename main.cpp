@@ -28,8 +28,6 @@ int main(){
 	ofstream out("simulator.txt");
 	int steps_number(stopTime/Neuron::h); //Division by h to get a integer  
 	
-	for(unsigned int i(0); i<net.getNetwork().size();++i){
-	
 		for(double t(startTime/Neuron::h); t<steps_number; t+=1){
 			if (out.fail()){
 				cerr << "Erreur : impossible d'ouvrir le fichier " << "simulator.dat"
@@ -38,28 +36,28 @@ int main(){
 				for(unsigned int i(0); i<net.getNetwork().size(); ++i){
 					for(unsigned int j(0); j<net.getNetwork().size(); ++j){
 						if(i!=j){
-							double weight(0);
+							double weight(0.0);
 							if(net.getCurrentWeights()[i][j]<=net.getCurrentWeights()[j][i]){ //The amplitude of the spike is the smallest between the receiver and the donner amplititude J
 								weight=net.getCurrentWeights()[i][j];
 							}else{
 								weight=net.getCurrentWeights()[j][i];
 							}
-							double external_current(0);
+							double external_current(0.0);
 							
 							if(i==0){ //If it is the first neuron of my network it has got an external current
 								external_current=I;
 							}
-							net.connect(i,j, weight, external_current);
+							net.connect(i,j, weight, external_current, t);
 						}
 						
 					}
 				
 					out << "A temps: " << t*Neuron::h << " ms, le potentiel de membrane du neurone " << i+1 <<  " est: " << net.getNetwork()[i]->getPotential() << "." << endl;
-					
 				}
+				//out << net.getNetwork()[1]->getPotential() << endl;
 			}
 		}
-	}
+	
 	
 	return 0;
 	
