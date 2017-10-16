@@ -10,9 +10,11 @@ int main(){
 	
 	Network net;
 	
-	/*cout << "Specify an external current (I=[0,400 pA]) : ";
+	double I(0); // External current (I=[0,400 pA])
+	
+	cout << "Specify an external current (I=[0,400 pA]) : ";
 	cin >> I;
-	cout << endl;*/
+	cout << endl;
 	
 	double startTime(0.0);
 	double stopTime(0.0);
@@ -42,12 +44,18 @@ int main(){
 							}else{
 								weight=net.getCurrentWeights()[j][i];
 							}
-							net.connect(i,j, weight);
+							double external_current(0);
+							
+							if(i==0){ //If it is the first neuron of my network it has got an external current
+								external_current=I;
+							}
+							net.connect(i,j, weight, external_current);
 						}
 						
 					}
+				
 					out << "A temps: " << t*Neuron::h << " ms, le potentiel de membrane du neurone " << i+1 <<  " est: " << net.getNetwork()[i]->getPotential() << "." << endl;
-						
+					
 				}
 			}
 		}

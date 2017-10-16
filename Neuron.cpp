@@ -63,6 +63,7 @@ bool Neuron::update(double I){
 			refractory_time=tau_ref/h; //Initialisation of the refractory time 
 			V_new=V_reset; //After  a spike, the potential gets back to its reset value	
 			hasSpiked=true;	
+			std::cout << "Spike at time: " << clock*h << " ms" << std::endl;
 			}
 		
 		V=V_new; //modify neuron potential

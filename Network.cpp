@@ -1,6 +1,4 @@
 #include "Network.hpp"
-#include "Constants.hpp"
-#include <iostream>
 
 //Constructeur et destructeur
 
@@ -11,7 +9,6 @@ Network::Network()
 	
 	Neuron* n1(nullptr);
 	n1 = new Neuron;
-	n1->setPotential(-20);
 	
 	my_network.push_back(n0);
 	my_network.push_back(n1);
@@ -56,10 +53,10 @@ std::vector<std::vector<double>> Network::getCurrentWeights() const{
 
 
 //Connexion
-void Network::connect(unsigned int from, unsigned int to, double weight){
-	if((my_network[from]->update(I)) and (targets[from][to])){
-		my_network[to]->setIncomingSpikes((delay[from][to]),weight);
-		my_network[to]->update(I);
+void Network::connect(unsigned int from, unsigned int to, double weight, double ext_current){
+	if((my_network[from]->update(ext_current)) and (targets[from][to])){ //Check whether n(from) has spiked and if n(from) gives his spikes to n(to)
+		my_network[to]->setIncomingSpikes((delay[from][to]),weight); //set in the buffer the incoming spikes
+		my_network[to]->update(0); //When the spike is transmitted the external current is equal to 0
 	}
 }
 
