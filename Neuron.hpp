@@ -19,7 +19,8 @@ class Neuron{
 		const double V_reset=0; // mV Membrane potential during the refractory time
 		const double V_th=20; //Valeur du potentiel qui cause un spike (Potential threshold)
 		const int step=1; //remplace le pas de temps h
-		const double e=exp(-(h/tau));
+		const double c1=exp(-(h/tau));
+		const double c2=R*(1-c1);
 
 		//atrributs
 		double V; //Membrane potential 

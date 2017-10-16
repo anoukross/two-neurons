@@ -1,4 +1,5 @@
 #include "Network.hpp"
+#include <cassert>
 
 //Constructeur et destructeur
 
@@ -54,7 +55,9 @@ std::vector<std::vector<double>> Network::getCurrentWeights() const{
 
 //Connexion
 void Network::connect(unsigned int from, unsigned int to, double weight, double ext_current, unsigned int time){
-	if((my_network[from]->update(ext_current, time)) and (targets[from][to])){ // check whether n(from) has spikes and if it gives his spikes to n(to)
+	if((my_network[from]->update(ext_current, time)) and (targets[from][to])){ // check whether n(from) has spikes and if it transmits his amplitude to n(to)
+		assert(from==0); //For now only 0 can transmit J to 1
+		assert(to==1);
 			my_network[to]->setIncomingSpikes((delay[from][to]),weight); //set in the buffer the incoming spikes
 			my_network[to]->update(0, time); //When the spike is transmitted the external current is equal to 0
 			
