@@ -1,17 +1,15 @@
 #include "Network.hpp"
-#include "Constants.hpp"
-#include <iostream>
+#include <cassert>
 
 //Constructeur et destructeur
 
 Network::Network()
 {
 	Neuron* n0(nullptr);
-	n0 = new Neuron;
+	n0 = new Neuron(0);
 	
 	Neuron* n1(nullptr);
-	n1 = new Neuron;
-	n1->setPotential(-20);
+	n1 = new Neuron(1);
 	
 	my_network.push_back(n0);
 	my_network.push_back(n1);
@@ -24,13 +22,13 @@ Network::Network()
 	
 	current_weights.emplace_back();
 	current_weights[0].push_back(0);//[0][0] ->do not tranfer to himself
-	current_weights[0].push_back(0.1); //[0][1] ->0 to 1 with ampiltude 0.1
+	current_weights[0].push_back(0.1); //J=0.1mV [0][1] ->0 gives to 1 with ampiltude 0.1
 	current_weights.emplace_back(); 
-	current_weights[1].push_back(0.1);//[1][0] ->receives with amplitude 0.1
+	current_weights[1].push_back(0.1);//[1][0] ->1 receives from a 0 with amplitude 0.1
 	current_weights[1].push_back(0); ;//[1][1] ->do not tranfer to himself
 	delay.emplace_back();
 	delay[0].push_back(0);
-	delay[0].push_back(5); //5 steps of time after the Neuron one has spiked will the Neuron 2 receives it
+	delay[0].push_back(15); //15 steps of time ->1.5ms after the Neuron one has spiked will the Neuron 2 receives it
 	delay.emplace_back();
 	delay[1].push_back(0);
 	delay[1].push_back(0);
@@ -56,10 +54,13 @@ std::vector<std::vector<double>> Network::getCurrentWeights() const{
 
 
 //Connexion
-void Network::connect(unsigned int from, unsigned int to, double weight){
-	if((my_network[from]->update(I)) and (targets[from][to])){
-		my_network[to]->setIncomingSpikes((delay[from][to]),weight);
-		my_network[to]->update(I);
+void Network::connect(unsigned int from, unsigned int to, double weight, double ext_current, unsigned int time){
+	if((my_network[from]->update(ext_current, time)) and (targets[from][to])){ // check whether n(from) has spikes and if it transmits his amplitude to n(to)
+		assert(from==0); //For now only 0 can transmit J to 1
+		assert(to==1);
+		my_network[to]->setIncomingSpikes((delay[from][to]),weight); //set in the buffer the incoming spikes
+		my_network[to]->update(0, time); //When the spike is transmitted the external current is equal to 0
+			
 	}
 }
 

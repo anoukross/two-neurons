@@ -24,7 +24,7 @@ class Network{
 	std::vector<std::vector<double>> getCurrentWeights() const;
 		
 	//Connexion
-	void connect(unsigned int from, unsigned int to, double weight);
+	void connect(unsigned int from, unsigned int to, double weight, double ext_current, unsigned int time);
 	
 };
 
