@@ -9,7 +9,7 @@ Neuron::Neuron(unsigned int i, double potential)
 :indice(i), V(potential), spikesNumber(0.0), refractory_time(0), clock(0)
 {
 	for(unsigned int i(0);i<Dmax;++i){
-		incoming_spikes[0]=0;
+		incoming_spikes[0]=0.0;
 	}
 	
 	spikesTime.clear(); //To be sure that when we create a neuron it has got no spikes time 
@@ -53,13 +53,13 @@ bool Neuron::isRefractory(){
 bool Neuron::update(double I, unsigned int time){
 	bool hasSpiked(false);
 	if(isRefractory()){ //If neuron is refractory -> neuron has spiked -> V is not modified
-		refractory_time-=step;//Decrementation of the refractory time 
+		refractory_time-=step;//Decrementation of the refractory time
 	}else{
 		double V_new(c1*V+I*c2);
-		if(incoming_spikes[clock%Dmax]>0){ //If a spike is associated with the current time, we add it to the new potential
+		if(incoming_spikes[clock%Dmax]>0.0){ //If a spike is associated with the current time, we add it to the new potential
 			V_new+=incoming_spikes[clock%Dmax];
 			std::cout << "Neuron " << indice+1 << " has received a spike at time " << time*h << std::endl;	
-			incoming_spikes[clock%Dmax]=0; //Reinitialisation of the value of my buffer corresponding to [clock%Dmax[ that have just been used
+			incoming_spikes[clock%Dmax]=0.0; //Reinitialisation of the value of my buffer corresponding to [clock%Dmax[ that have just been used
 		}
 			
 		if(V_new > V_th){

@@ -26,9 +26,9 @@ int main(){
 	
 	
 	ofstream out("simulator.txt");
-	int steps_number(stopTime/Neuron::h); //Division by h to get a integer  
+	unsigned int steps_number(stopTime/Neuron::h); //Division by h to get an integer
 	
-		for(double t(startTime/Neuron::h); t<steps_number; t+=1){
+		for(unsigned int t(startTime/Neuron::h); t<steps_number; ++t){
 			if (out.fail()){
 				cerr << "Erreur : impossible d'ouvrir le fichier " << "simulator.dat"
 				<< "en écriture." << endl;
