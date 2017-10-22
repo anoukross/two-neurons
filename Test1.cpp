@@ -20,7 +20,7 @@ TEST (NeuronTest, shouldSpike){
 	for(unsigned int t(0); t<5000;  ++t){ //t corresponds to the step of time 5000 ->500 ms
 		
 		//Should spike only at 92.4ms, 186.8ms,281.2ms,375.6ms, 470.0ms
-		if((abs(92.3/Neuron::h-t) <= exp(-6)) or (abs(186.7/Neuron::h-t) <= exp(-6)) or (abs(281.1/Neuron::h-t) <= exp(-6)) or (abs(375.5/Neuron::h-t) <= exp(-6)) or (abs(469.9/Neuron::h-t) <= exp(-6))){
+		if((abs(92.4/Neuron::h-t) <= exp(-6)) or (abs(186.8/Neuron::h-t) <= exp(-6)) or (abs(281.2/Neuron::h-t) <= exp(-6)) or (abs(375.6/Neuron::h-t) <= exp(-6)) or (abs(470.0/Neuron::h-t) <= exp(-6))){
 			EXPECT_EQ(n.update(I,t),true); 
 		}else{
 			EXPECT_EQ(n.update(I,t),false); 
