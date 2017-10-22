@@ -10,9 +10,14 @@
 		//At 92.4ms (t=924 the potential of n2 should have increased of net.getCurrentWeights()[i][j]=0.1
 		if(t==924){
 		double potential(net.getNetwork()[1]->getPotential()); //Potential befor that n0 has spiked
-		net.connect(0,1,I,net.getCurrentWeights()[0][1], t);
+		net.connect(0,1,net.getCurrentWeights()[0][1], I, t);
+		net.connect(1,0,net.getCurrentWeights()[0][1], 0, t);
 		EXPECT_LE((abs(potential + 0.1- (net.getNetwork()[1]->getPotential()))), exp(-6)); //Expect equality of double less or equal than exp(-6)	
+		} else{
+			net.connect(0,1,net.getCurrentWeights()[0][1], I, t);
+			net.connect(1,0,net.getCurrentWeights()[0][1], I, t);
 		}
+		
 	}	
 	
 }*/
