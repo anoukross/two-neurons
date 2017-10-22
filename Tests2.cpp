@@ -1,7 +1,7 @@
 #include "Network.hpp"
 #include "googletest/include/gtest/gtest.h"
 #include <cmath>
-#include <iostream>
+
 //Before delay
 /*TEST (NetworkTest, VmatchesJ){
 	Network net;
