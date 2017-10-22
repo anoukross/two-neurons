@@ -1,7 +1,9 @@
 # two-neurons
 The Neuron project - S2/S3
 
-Le test 2 s'occupe de vérifier si le neurone 2 reçoit correctement le courant post-synaptique du neurone 1. D'abord sans délais, puis avec délais. Si le temps égale au (temps du spike du neurone + le délais) le potentiel de mebrane du neurone 2, devrait augmenter de J.
 
-Il me reste un petit défaut à corriger -> le délais est de 0.14 ms et non de 0.15. 
+Test 2 verifies whether the second neuron receives correctly the postsynaptic current from the first neuron. First without delay than with a delay of 0.15ms. If the time = (time at which Neuron 1 has spikes + the delay), the membrane potential of the second neuron should have increased of J(net.getCurrentWeights()[0][1]=0.1 mV).
+
+I still have to understand why the delay is of 0.14ms instead of 0.15ms.
+
 
