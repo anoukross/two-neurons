@@ -11,7 +11,7 @@
 		if(t==924){
 		double potential(net.getNetwork()[1]->getPotential()); //Potential befor that n0 has spiked
 		net.connect(0,1,I,net.getCurrentWeights()[0][1], t);
-		EXPECT_LE((potential + 0.1- (net.getNetwork()[1]->getPotential())), exp(-6)); //Expect equality of double less or equal than exp(-6)	
+		EXPECT_LE((abs(potential + 0.1- (net.getNetwork()[1]->getPotential()))), exp(-6)); //Expect equality of double less or equal than exp(-6)	
 		}
 	}	
 	
@@ -26,13 +26,13 @@ TEST (NetworkTest, VmatchesD){
 			double potential(net.getNetwork()[1]->getPotential()); 
 			net.connect(0,1,I,net.getCurrentWeights()[0][1], t);
 			net.connect(1,0,0, net.getCurrentWeights()[0][1], t);
-			EXPECT_LE((potential - net.getNetwork()[1]->getPotential()), exp(-6)); //potential should be the same after connect -> delay is not over
+			EXPECT_LE((abs(potential - net.getNetwork()[1]->getPotential())), exp(-6)); //potential should be the same after connect -> delay is not over
 																					//Expect equality of double less or equal than exp(-6)		
 		}	
 		if(t==937){
 			double potential(net.getNetwork()[1]->getPotential()); 
 			net.connect(0,1,I,net.getCurrentWeights()[0][1], t);
-			EXPECT_LE((potential + 0.1 - net.getNetwork()[1]->getPotential()), exp(-6)); //potential corresponds to the potential before the end of the delay  	
+			EXPECT_LE((abs(potential + 0.1 - net.getNetwork()[1]->getPotential())), exp(-6)); //potential corresponds to the potential before the end of the delay  	
 																//net.getNetwork()[1]->getPotential() is after receiving the amplitude J(0.1)
 																//So potential + J should = net.getNetwork()[1]->getPotential()
 			net.connect(1,0,0,net.getCurrentWeights()[0][1], t);													
