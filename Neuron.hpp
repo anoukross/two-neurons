@@ -6,7 +6,6 @@
 #include <cmath>
 
 
-const int Dmax=16; //Maximal delay of transmission + 1 & delay of 16 means 1.6ms
 class Neuron{
 	private:
 	
@@ -21,14 +20,14 @@ class Neuron{
 		const int step=1; //remplace le pas de temps h
 		const double c1=exp(-(h/tau));
 		const double c2=R*(1-c1);
+		const int Dmax=16; //Maximal delay of transmission + 1 & delay of 16 means 1.6ms 
 
 		//atrributs
 		double V; //Membrane potential 
 		unsigned int spikesNumber; //Number of spikes
 		std::vector<double> spikesTime; // The times when the spikes occured
-		double refractory_time;
 		unsigned int clock;
-		std::array<double, Dmax> incoming_spikes; //Each step of time is associated with the amplitude of the spikes arriving from the neighbours at that time
+		std::vector<double> incoming_spikes; //Each step of time is associated with the amplitude of the spikes arriving from the neighbours at that time
 		unsigned int indice;
 		
 	public:
