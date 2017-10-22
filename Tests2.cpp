@@ -3,6 +3,7 @@
 #include <cmath>
 
 //Before delay
+
 /*TEST (NetworkTest, VmatchesJ){
 	Network net;
 	double I(1.01);
@@ -30,9 +31,10 @@ TEST (NetworkTest, VmatchesD){
 		if(t<937){
 			double potential(net.getNetwork()[1]->getPotential()); 
 			net.connect(0,1,net.getCurrentWeights()[0][1], I, t);
+			net.connect(1,0, net.getCurrentWeights()[0][1], 0, t);
 			EXPECT_LE((abs(potential - net.getNetwork()[1]->getPotential())), exp(-6)); //potential should be the same after connect -> delay is not over
 																					//Expect equality of double less or equal than exp(-6)	
-			net.connect(1,0, net.getCurrentWeights()[0][1], 0, t);	
+				
 		}	
 		if(t==937){
 			double potential(net.getNetwork()[1]->getPotential()); 
