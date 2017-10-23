@@ -26,23 +26,23 @@
 TEST (NetworkTest, VmatchesD){
 	Network net;
 	double I(1.01);
-	for(unsigned int t(0); t<1000;  ++t){ //t corresponds to the step of time 5000 ->500 ms
+	for(unsigned int t(1); t<1000;  ++t){ //t corresponds to the step of time 5000 ->500 ms , cannot spike at 0 -> start at 0.1ms
 		//At 92.4ms+1.5 ms=93.9 (t=924+15=939 the potential of n2 should have increased of net.getCurrentWeights()[i][j]=0.1
-		if(t<937){
+		if(t<938){
 			double potential(net.getNetwork()[1]->getPotential()); 
 			net.connect(0,1,net.getCurrentWeights()[0][1], I, t);
 			net.connect(1,0, net.getCurrentWeights()[0][1], 0, t);
 			EXPECT_LE((abs(potential - net.getNetwork()[1]->getPotential())), exp(-6)); //potential should be the same after connect -> delay is not over
-																					//Expect equality of double less or equal than exp(-6)	
-				
+																					//Expect equality of double less or equal than exp(-6)			
 		}	
-		if(t==937){
+		if(t==938){
 			double potential(net.getNetwork()[1]->getPotential()); 
 			net.connect(0,1,net.getCurrentWeights()[0][1], I, t);
 			net.connect(1,0,net.getCurrentWeights()[0][1], 0, t);
 			EXPECT_LE((abs(potential + 0.1 - net.getNetwork()[1]->getPotential())), exp(-6)); //potential corresponds to the potential before the end of the delay  	
 																//net.getNetwork()[1]->getPotential() is after receiving the amplitude J(0.1)
 																//So potential + J should = net.getNetwork()[1]->getPotential()
+																
 													
 		}
 	}
