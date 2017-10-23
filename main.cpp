@@ -32,7 +32,7 @@ int main(){
 			if (out.fail()){
 				cerr << "Erreur : impossible d'ouvrir le fichier " << "simulator.dat"
 				<< "en écriture." << endl;
-			} else {
+			} else if (t>0) { //There is no update when the time is equal to 0
 				for(unsigned int i(0); i<net.getNetwork().size(); ++i){
 					for(unsigned int j(0); j<net.getNetwork().size(); ++j){
 						if(i!=j){
